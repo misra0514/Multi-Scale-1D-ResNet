@@ -23,7 +23,7 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import math
 import time
-
+import visualize
 from tqdm import tqdm
 
 from model.multi_scale_ori import *
@@ -37,7 +37,7 @@ batch_size = 1024
 num_epochs = 350
 
 
-# load data
+# 1 load data
 data = sio.loadmat('data/changingSpeed_train.mat')
 train_data = data['train_data_split']
 train_label = data['train_label_split']
@@ -69,7 +69,8 @@ test_dataset = TensorDataset(test_data, test_label)
 test_data_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False)
 
 
-msresnet = MSResNet(input_channel=1, layers=[1, 1, 1, 1], num_classes=6)
+# 2 modeling
+msresnet = MSResNet(input_channel=1, layers=[1, 1, 1, 1], num_classes=6) # numclass should be 3; while input will also be amend
 msresnet = msresnet.cuda()
 
 criterion = nn.CrossEntropyLoss(size_average=False).cuda()
